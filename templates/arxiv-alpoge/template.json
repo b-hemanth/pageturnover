@@ -1,0 +1,9 @@
+{
+  "name": "arXiv mathematics — Alpöge",
+  "description": "A submission-safe mathematics article distilled from Levent Alpöge's actual arXiv sources: compact 11pt page, AMS theorem system, section-numbered equations, restrained links, and amsalpha references.",
+  "projectDescription": "arXiv-ready mathematics paper",
+  "rootFile": "main.tex",
+  "accent": "#B31B1B",
+  "order": 1,
+  "tags": ["arxiv", "mathematics", "ams", "theorems", "bibtex", "pdflatex"]
+}

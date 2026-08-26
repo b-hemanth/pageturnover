@@ -1,0 +1,719 @@
+.pdfp-viewer {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  position: relative;
+  display: grid;
+  grid-template-rows: 36px minmax(0, 1fr);
+  overflow: hidden;
+  color: var(--ink, #1a202c);
+  background: #cbd0cc;
+  font-family: 'Work Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.pdfp-viewer .sr-only {
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.pdfp-toolbar {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 8px;
+  position: relative;
+  z-index: 4;
+  color: var(--ink-2, #454f5b);
+  background: #eef1ee;
+  border-bottom: 1px solid #9fa8a1;
+  font-size: 9px;
+}
+
+.pdfp-toolbar button,
+.pdfp-toolbar select,
+.pdfp-toolbar input,
+.pdfp-state button,
+.pdfp-page-error button,
+.pdfp-error-strip button {
+  font: inherit;
+}
+
+.pdfp-toolbar button {
+  width: 25px;
+  height: 25px;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: var(--ink-2, #454f5b);
+  background: transparent;
+  border: 1px solid transparent;
+}
+
+.pdfp-toolbar button:not(:disabled):hover {
+  color: var(--green-deeper, #005249);
+  background: #e1e6e2;
+  border-color: #b7c0b9;
+}
+
+.pdfp-toolbar button:focus-visible,
+.pdfp-toolbar select:focus-visible,
+.pdfp-toolbar input:focus-visible,
+.pdfp-state button:focus-visible,
+.pdfp-page-error button:focus-visible,
+.pdfp-error-strip button:focus-visible,
+.pdfp-scroll:focus-visible {
+  outline: 2px solid var(--blue, #3366ff);
+  outline-offset: -2px;
+}
+
+.pdfp-pagination,
+.pdfp-zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 0 0 auto;
+}
+
+.pdfp-pagination label {
+  display: flex;
+}
+
+.pdfp-pagination input {
+  width: 31px;
+  height: 22px;
+  padding: 0 4px;
+  color: var(--ink, #1a202c);
+  background: #fff;
+  border: 1px solid #b5bdb7;
+  border-radius: 0;
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 8px;
+  text-align: center;
+}
+
+.pdfp-pagination > span {
+  min-width: 28px;
+  color: var(--ink-3, #758078);
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 8px;
+  white-space: nowrap;
+}
+
+.pdfp-toolbar-rule {
+  width: 1px;
+  height: 18px;
+  flex: 0 0 auto;
+  background: #c0c7c2;
+}
+
+.pdfp-zoom-controls select {
+  width: 78px;
+  height: 23px;
+  padding: 0 18px 0 7px;
+  color: var(--ink-2, #454f5b);
+  background: #f8faf8;
+  border: 1px solid #b5bdb7;
+  border-radius: 0;
+  font-size: 8px;
+}
+
+.pdfp-view-status {
+  min-width: 0;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+  overflow: hidden;
+  color: var(--ink-3, #758078);
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 7px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.pdfp-view-status > span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pdfp-view-status.is-active {
+  color: var(--green-deeper, #005249);
+}
+
+.pdfp-ready-dot {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 auto;
+  background: var(--green, #00ab55);
+  border-radius: 50%;
+}
+
+.pdfp-scroll {
+  min-width: 0;
+  min-height: 0;
+  position: relative;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  background-color: #cbd0cc;
+  background-image:
+    linear-gradient(rgba(52, 63, 56, 0.075) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(52, 63, 56, 0.075) 1px, transparent 1px);
+  background-size: 12px 12px;
+  scrollbar-color: #7d8880 #c5cbc6;
+  scrollbar-width: thin;
+}
+
+.pdfp-scroll::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.pdfp-scroll::-webkit-scrollbar-track {
+  background: #c5cbc6;
+  border-left: 1px solid #aeb6b0;
+}
+
+.pdfp-scroll::-webkit-scrollbar-thumb {
+  background: #7d8880;
+  border: 2px solid #c5cbc6;
+}
+
+.pdfp-pages {
+  width: max-content;
+  min-width: 100%;
+  min-height: 100%;
+  padding: 30px 26px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.pdfp-page {
+  width: var(--pdfp-page-width);
+  height: var(--pdfp-page-height);
+  flex: 0 0 auto;
+  position: relative;
+  transition: width 140ms ease, height 140ms ease;
+}
+
+.pdfp-page-index {
+  width: 24px;
+  height: 20px;
+  position: absolute;
+  top: 0;
+  left: -25px;
+  display: grid;
+  place-items: center;
+  color: #4e5b53;
+  background: #b9c0ba;
+  border-top: 1px solid #8e9890;
+  border-bottom: 1px solid #8e9890;
+  border-left: 1px solid #8e9890;
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 7px;
+  letter-spacing: 0.04em;
+}
+
+.pdfp-paper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  outline: 1px solid #8e9890;
+  box-shadow: 4px 5px 0 rgba(65, 76, 68, 0.19);
+}
+
+.pdfp-paper::before {
+  content: '';
+  width: 3px;
+  height: 22px;
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  background: var(--green, #00ab55);
+  pointer-events: none;
+}
+
+.pdfp-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #fff;
+}
+
+.pdfp-canvas[aria-label*='Double-click'] {
+  cursor: crosshair;
+}
+
+.pdfp-page-loading,
+.pdfp-page-error {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pdfp-page-loading {
+  color: #748078;
+  background:
+    linear-gradient(90deg, transparent 8%, #e6e8e4 8%, #e6e8e4 64%, transparent 64%) 0 12% / 100% 2px no-repeat,
+    linear-gradient(90deg, transparent 8%, #eef0ed 8%, #eef0ed 90%, transparent 90%) 0 18% / 100% 2px no-repeat,
+    linear-gradient(90deg, transparent 8%, #eef0ed 8%, #eef0ed 86%, transparent 86%) 0 21% / 100% 2px no-repeat,
+    #fffefa;
+}
+
+.pdfp-page-loading > span {
+  width: 5px;
+  height: 28px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #bfc6c0;
+}
+
+.pdfp-page-error {
+  padding: 30px;
+  flex-direction: column;
+  gap: 9px;
+  color: #672d28;
+  background: #fff8f5;
+  text-align: center;
+}
+
+.pdfp-page-error span {
+  max-width: 260px;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.pdfp-page-error button,
+.pdfp-error-strip button {
+  padding: 5px 8px;
+  color: #672d28;
+  background: transparent;
+  border: 1px solid #9e4b43;
+  font-size: 8px;
+  font-weight: 600;
+}
+
+.pdfp-source-highlight {
+  position: absolute;
+  z-index: 5;
+  display: block;
+  background: rgba(91, 229, 132, 0.28);
+  border: 2px solid var(--green, #00ab55);
+  pointer-events: none;
+  animation: pdfp-locate 520ms ease-out;
+}
+
+.pdfp-source-highlight.is-point {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.pdfp-source-highlight i {
+  min-width: 25px;
+  height: 12px;
+  padding: 0 3px;
+  position: absolute;
+  top: -14px;
+  left: -2px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  background: var(--green-deeper, #005249);
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 6px;
+  font-style: normal;
+  letter-spacing: 0.08em;
+}
+
+.pdfp-source-highlight.is-point i {
+  transform: rotate(-45deg);
+  transform-origin: left bottom;
+}
+
+.pdfp-state {
+  width: min(390px, calc(100% - 42px));
+  min-height: min(520px, calc(100% - 54px));
+  margin: 27px auto;
+  padding: clamp(56px, 12vh, 118px) clamp(34px, 9%, 72px) 54px;
+  position: relative;
+  color: var(--ink, #1a202c);
+  background: #fffefa;
+  border: 1px solid #8e9890;
+}
+
+.pdfp-state::before {
+  content: '';
+  width: 66px;
+  height: 5px;
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  background: linear-gradient(90deg, var(--ink, #1a202c) 0 33.333%, var(--green, #00ab55) 33.333% 66.666%, #aeb6b0 66.666%);
+}
+
+.pdfp-state.is-error::before {
+  background: linear-gradient(90deg, var(--ink, #1a202c) 0 33.333%, var(--error, #b23c34) 33.333% 66.666%, #aeb6b0 66.666%);
+}
+
+.pdfp-state-mark {
+  width: 42px;
+  height: 42px;
+  margin-bottom: 30px;
+  display: grid;
+  place-items: center;
+  color: var(--green-deeper, #005249);
+  background: #e7f5ea;
+  border: 1px solid #8fb59a;
+}
+
+.pdfp-state.is-error .pdfp-state-mark {
+  color: #81362f;
+  background: #fff0ed;
+  border-color: #ca8f89;
+}
+
+.pdfp-kicker {
+  margin: 0 0 13px;
+  color: var(--green-deeper, #005249);
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 7px;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+}
+
+.pdfp-state.is-error .pdfp-kicker {
+  color: var(--error, #b23c34);
+}
+
+.pdfp-state h3 {
+  margin: 0 0 10px;
+  font-family: 'Lora', Georgia, serif;
+  font-size: clamp(21px, 2.5vw, 29px);
+  line-height: 1.03;
+  letter-spacing: -0.035em;
+}
+
+.pdfp-state > p:not(.pdfp-kicker) {
+  max-width: 270px;
+  margin: 0;
+  color: var(--ink-3, #758078);
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.pdfp-state > button {
+  min-height: 31px;
+  margin-top: 22px;
+  padding: 0 11px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #fff;
+  background: var(--green-deeper, #005249);
+  border: 1px solid var(--green-deeper, #005249);
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.pdfp-state.is-error > button {
+  background: #71312b;
+  border-color: #71312b;
+}
+
+.pdfp-progress {
+  width: 100%;
+  height: 5px;
+  margin-top: 28px;
+  overflow: hidden;
+  background: #dfe4df;
+}
+
+.pdfp-progress > span {
+  height: 100%;
+  display: block;
+  background: var(--green, #00ab55);
+  transition: width 180ms ease-out;
+}
+
+.pdfp-progress.is-indeterminate > span {
+  animation: pdfp-indeterminate 1.1s ease-in-out infinite alternate;
+}
+
+.pdfp-error-strip {
+  min-height: 34px;
+  max-width: calc(100% - 24px);
+  padding: 6px 7px 6px 9px;
+  position: absolute;
+  z-index: 8;
+  right: 12px;
+  bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #672d28;
+  background: #fff5f2;
+  border: 1px solid #9e4b43;
+  font-size: 8px;
+}
+
+.pdfp-error-strip span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pdfp-error-strip button {
+  margin-left: auto;
+  flex: 0 0 auto;
+}
+
+.pdfp-spin {
+  animation: pdfp-spin 800ms linear infinite;
+}
+
+@keyframes pdfp-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pdfp-locate {
+  from { opacity: 0; outline: 8px solid rgba(0, 171, 85, 0.2); outline-offset: 7px; }
+  to { opacity: 1; outline: 0 solid rgba(0, 171, 85, 0); outline-offset: 0; }
+}
+
+@keyframes pdfp-indeterminate {
+  from { transform: translateX(-28%); }
+  to { transform: translateX(28%); }
+}
+
+@media (max-width: 560px) {
+  .pdfp-toolbar {
+    gap: 3px;
+    padding: 0 4px;
+  }
+
+  .pdfp-toolbar-rule,
+  .pdfp-view-status {
+    display: none;
+  }
+
+  .pdfp-zoom-controls select {
+    width: 72px;
+  }
+
+  .pdfp-pages {
+    padding-right: 17px;
+    padding-left: 17px;
+  }
+
+  .pdfp-page-index {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pdfp-page,
+  .pdfp-progress > span,
+  .pdfp-source-highlight {
+    transition: none;
+    animation: none;
+  }
+}
+
+/* Proofs sit on a neutral pasteboard, like pages at a compositor's desk. */
+.pdfp-viewer {
+  color: var(--ink, #191918);
+  background: var(--desk, #dfded9);
+}
+
+.pdfp-toolbar {
+  color: var(--ink-2, #44433f);
+  background: #f8f8f5;
+  border-bottom-color: #aaa8a0;
+}
+
+.pdfp-toolbar button {
+  color: var(--ink-2, #44433f);
+  border-radius: 0;
+}
+
+.pdfp-toolbar button:not(:disabled):hover {
+  color: var(--link, #315b7d);
+  background: #e8e7e2;
+  border-color: #b9b7b0;
+}
+
+.pdfp-toolbar-rule {
+  background: #cbc9c2;
+}
+
+.pdfp-pagination input,
+.pdfp-zoom-controls select {
+  color: var(--ink, #191918);
+  background: #fff;
+  border-color: #aaa8a0;
+  border-radius: 0;
+}
+
+.pdfp-view-status.is-active {
+  color: var(--link, #315b7d);
+}
+
+.pdfp-ready-dot {
+  width: 5px;
+  height: 5px;
+  background: var(--link, #315b7d);
+  border-radius: 0;
+}
+
+.pdfp-scroll {
+  background-color: var(--desk, #dfded9);
+  background-image: none;
+  scrollbar-color: #77756f #d2d1cc;
+}
+
+.pdfp-scroll::-webkit-scrollbar-track {
+  background: #d2d1cc;
+  border-left-color: #b5b3ac;
+}
+
+.pdfp-scroll::-webkit-scrollbar-thumb {
+  background: #77756f;
+  border-color: #d2d1cc;
+}
+
+.pdfp-pages {
+  padding-top: 34px;
+  gap: 34px;
+}
+
+.pdfp-page {
+  transition-duration: 100ms;
+}
+
+.pdfp-page-index {
+  width: auto;
+  height: auto;
+  top: -18px;
+  left: 0;
+  color: #615f59;
+  background: transparent;
+  border: 0;
+  font-family: var(--math-serif, Georgia, serif);
+  font-size: 10px;
+  font-style: italic;
+  letter-spacing: 0;
+}
+
+.pdfp-paper {
+  background: #fff;
+  outline-color: #8e8c85;
+  box-shadow: none;
+}
+
+.pdfp-paper::before {
+  width: 2px;
+  height: 18px;
+  background: var(--arxiv, #b31b1b);
+}
+
+.pdfp-page-loading {
+  color: #77756f;
+  background: #fff;
+  background-image: none;
+}
+
+.pdfp-page-loading > span {
+  width: 2px;
+  height: 18px;
+  background: #aaa8a0;
+}
+
+.pdfp-source-highlight {
+  background: rgba(49, 91, 125, 0.2);
+  border-color: var(--link, #315b7d);
+}
+
+.pdfp-source-highlight i {
+  color: #fff;
+  background: var(--link, #315b7d);
+}
+
+.pdfp-state {
+  color: var(--ink, #191918);
+  background: #fff;
+  border-color: #8e8c85;
+}
+
+.pdfp-state::before,
+.pdfp-state.is-error::before {
+  width: auto;
+  height: 2px;
+  right: -1px;
+  background: var(--arxiv, #b31b1b);
+  background-image: none;
+}
+
+.pdfp-state-mark {
+  width: 38px;
+  height: 38px;
+  color: var(--link, #315b7d);
+  background: transparent;
+  border-color: #9ea9b1;
+}
+
+.pdfp-kicker {
+  color: var(--arxiv, #b31b1b);
+}
+
+.pdfp-state h3 {
+  font-family: var(--math-serif, Georgia, serif);
+  font-size: clamp(21px, 2.5vw, 28px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+
+.pdfp-state > button {
+  color: #fff;
+  background: #272726;
+  border-color: #272726;
+}
+
+.pdfp-state > button:hover {
+  background: var(--arxiv, #b31b1b);
+  border-color: var(--arxiv, #b31b1b);
+}
+
+.pdfp-progress {
+  height: 3px;
+  background: #deddd8;
+}
+
+.pdfp-progress > span {
+  background: var(--link, #315b7d);
+}
+
+.pdfp-error-strip {
+  background: #fff8f7;
+}

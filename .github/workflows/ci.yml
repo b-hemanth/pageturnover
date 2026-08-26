@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            extensions/tex-desk/package-lock.json
+      - name: Install TeX toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y latexmk texlive-xetex texlive-latex-extra texlive-fonts-recommended texlive-science lmodern chktex poppler-utils
+      - run: npm ci
+      - run: npm run check
+      - run: npm test
+      - run: npm run build
+      - run: npm --prefix extensions/tex-desk ci
+      - run: npm --prefix extensions/tex-desk run check
+      - run: npm --prefix extensions/tex-desk test
+      - run: npm run cursor:package
+      - run: npm run audit:release
+      - uses: actions/upload-artifact@v7
+        with:
+          name: hbc-tex-companion
+          path: extensions/tex-desk/*.vsix
+          if-no-files-found: error
+      - name: Smoke-test idempotent initialization
+        env:
+          PAGETURNOVER_CONFIG_DIR: ${{ runner.temp }}/pageturnover-config
+        run: |
+          npm run setup -- --no-deps --no-build --no-cursor
+          npm run setup -- --no-deps --no-build --no-cursor
+          test -f workspaces/welcome-paper/main.tex

@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "hbc-tex-desk": {
+      "command": "node",
+      "args": ["./mcp/server.mjs"],
+      "cwd": "."
+    }
+  }
+}

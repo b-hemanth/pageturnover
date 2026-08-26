@@ -1,0 +1,9 @@
+{
+  "name": "Research paper",
+  "description": "A rigorous article scaffold with abstract, section files, cross-references, and BibTeX citations.",
+  "projectDescription": "Research article",
+  "rootFile": "main.tex",
+  "accent": "#3366FF",
+  "order": 2,
+  "tags": ["academic", "bibtex", "article"]
+}

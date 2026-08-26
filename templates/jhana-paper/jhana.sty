@@ -1,0 +1,170 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{jhana}[2026/08/26 jhana long-form document system]
+
+\RequirePackage{iftex}
+\ifXeTeX\else
+  \PackageError{jhana}{This package requires XeLaTeX}{Select XeLaTeX as the compiler.}
+\fi
+
+\RequirePackage[a4paper,margin=0.82in,top=0.72in,bottom=0.78in]{geometry}
+\RequirePackage{fontspec}
+\RequirePackage{microtype}
+\RequirePackage{amsmath,amssymb}
+\RequirePackage{booktabs}
+\RequirePackage{array}
+\RequirePackage{graphicx}
+\RequirePackage[table,dvipsnames]{xcolor}
+\RequirePackage{enumitem}
+\RequirePackage{setspace}
+\RequirePackage{adjustbox}
+\RequirePackage{titlesec}
+\RequirePackage{needspace}
+\RequirePackage{etoolbox}
+\RequirePackage{calc}
+\RequirePackage{colortbl}
+\RequirePackage{fancyhdr}
+\RequirePackage[round,authoryear]{natbib}
+\RequirePackage{hyperref}
+
+% Typography. Prefer the locally installed jhana faces; TeX Gyre remains a
+% deliberate fallback on machines where the brand fonts are unavailable.
+% The variable font files are bundled in assets/ for newer engines and editors.
+\defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\IfFontExistsTF{Work Sans}{%
+  \setmainfont[
+    BoldFont={Work Sans},BoldFeatures={FakeBold=1.45},
+    ItalicFont={Work Sans},ItalicFeatures={FakeSlant=0.18},
+    BoldItalicFont={Work Sans},BoldItalicFeatures={FakeBold=1.35,FakeSlant=0.18}
+  ]{Work Sans}%
+}{\setmainfont{TeX Gyre Heros}}
+\IfFontExistsTF{Lora}{%
+  \newfontfamily\jhanaserif[
+    BoldFont={Lora},BoldFeatures={FakeBold=1.45},
+    ItalicFont={Lora},ItalicFeatures={FakeSlant=0.18},
+    BoldItalicFont={Lora},BoldItalicFeatures={FakeBold=1.35,FakeSlant=0.18}
+  ]{Lora}%
+}{\newfontfamily\jhanaserif{TeX Gyre Pagella}}
+\IfFontExistsTF{Georgia}{\newfontfamily\rupeefont{Georgia}}{\newfontfamily\rupeefont{DejaVu Sans}}
+\newcommand{\rupee}{\text{\rupeefont ₹}}
+
+% Canonical palette.
+\definecolor{jhanaInk}{HTML}{212B36}
+\definecolor{jhanaGreen}{HTML}{00AB55}
+\definecolor{jhanaGreenDark}{HTML}{007B55}
+\definecolor{jhanaGreenDarker}{HTML}{005249}
+\definecolor{jhanaGreenLight}{HTML}{C8FACD}
+\definecolor{jhanaDim}{HTML}{637381}
+\definecolor{jhanaRow}{HTML}{F4F6F8}
+\definecolor{jhanaCream}{HTML}{FAF4ED}
+\definecolor{jhanaAmber}{HTML}{B45309}
+\definecolor{jhanaWarning}{HTML}{FFF4DE}
+\definecolor{navy}{HTML}{212B36}
+\definecolor{teal}{HTML}{00AB55}
+\definecolor{accent}{HTML}{007B55}
+\definecolor{row1}{HTML}{F4F6F8}
+\definecolor{row2}{HTML}{FFFFFF}
+\definecolor{hdr}{HTML}{212B36}
+\definecolor{totbg}{HTML}{C8FACD}
+\definecolor{resbg}{HTML}{E8F7EE}
+\definecolor{resbdr}{HTML}{005249}
+\definecolor{warnbg}{HTML}{FFF4DE}
+\definecolor{warnbdr}{HTML}{B45309}
+\definecolor{dim}{HTML}{637381}
+
+\color{jhanaInk}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=jhanaInk,
+  citecolor=jhanaGreenDark,
+  urlcolor=jhanaGreenDark
+}
+
+% Hierarchy: Lora carries headings; the green rule carries the brand.
+\titleformat{\section}{\large\jhanaserif\bfseries\color{jhanaInk}}{\thesection\quad}{0em}{}[\vspace{2pt}{\color{jhanaGreen!55}\titlerule}]
+\titleformat{\subsection}{\normalsize\jhanaserif\bfseries\color{jhanaInk!88}}{\thesubsection\quad}{0em}{}
+\titleformat{\subsubsection}{\small\bfseries\color{jhanaInk!75}}{\thesubsubsection\quad}{0em}{}
+\titlespacing*{\section}{0pt}{20pt}{7pt}
+\titlespacing*{\subsection}{0pt}{13pt}{4pt}
+\titlespacing*{\subsubsection}{0pt}{9pt}{3pt}
+\pretocmd{\section}{\Needspace{5\baselineskip}}{}{}
+\pretocmd{\subsection}{\Needspace{4\baselineskip}}{}{}
+
+\setlist[itemize]{leftmargin=1.25em,itemsep=2pt,topsep=4pt,parsep=0pt,label={\color{jhanaInk!38}\textbullet}}
+\setlist[itemize,2]{leftmargin=1.15em,itemsep=1pt,label={\color{jhanaInk!28}--}}
+\setlist[enumerate]{leftmargin=1.45em,itemsep=2pt,topsep=4pt}
+
+\setstretch{1.105}
+\setlength{\parskip}{5pt}
+\setlength{\parindent}{0pt}
+\setlength{\aboverulesep}{0pt}
+\setlength{\belowrulesep}{0pt}
+\setlength{\extrarowheight}{5pt}
+\emergencystretch=2em
+
+% Real logo asset. Never approximate the jhana wordmark with a font.
+\newcommand{\jhanalogo}[1][3.25cm]{%
+  \IfFileExists{assets/jhana-logo-black.png}{\includegraphics[width=#1]{assets/jhana-logo-black.png}}{}
+}
+
+\makeatletter
+\renewcommand{\maketitle}{%
+  \begin{flushleft}
+    \jhanalogo[3.15cm]\par
+    \vspace{1.5em}
+    {\jhanaserif\fontsize{25}{29}\selectfont\bfseries\color{jhanaInk}\@title\par}
+    \vspace{0.65em}
+    {\color{jhanaGreen}\rule{0.68\textwidth}{3pt}\par}
+    \vspace{0.8em}
+    {\normalsize\color{jhanaDim}\@author\hfill\@date\par}
+  \end{flushleft}
+  \vspace{1.1em}
+  \thispagestyle{empty}
+}
+\makeatother
+
+\renewenvironment{abstract}{%
+  \par\noindent\begin{minipage}{\textwidth}
+  \color{jhanaInk}\jhanaserif\itshape
+  \textcolor{jhanaGreenDark}{\normalfont\bfseries Abstract.}\enspace
+}{%
+  \end{minipage}\par\vspace{1.1em}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\newcommand{\jhanarunningtitle}{Working paper}
+\fancyhead[L]{\small\color{jhanaDim}\jhanarunningtitle}
+\fancyhead[R]{\small\color{jhanaGreenDark}\thepage}
+\renewcommand{\headrulewidth}{0.35pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{jhanaGreen!45}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\headheight}{22pt}
+
+% Canonical table and emphasis helpers.
+\newcommand{\thdr}[1]{\cellcolor{hdr}\color{white}\textbf{\small #1}}
+\newcommand{\hlv}[1]{\textcolor{teal}{\textbf{#1}}}
+\newcommand{\good}[1]{\textcolor{accent}{\textbf{#1}}}
+\newcommand{\dimtxt}[1]{{\small\color{dim}#1}}
+
+% Flat, border-morphic callouts from the canonical management-note system.
+\newsavebox{\jhanacalloutbox}
+\newenvironment{keyresult}{%
+  \begin{lrbox}{\jhanacalloutbox}\begin{minipage}{\dimexpr\textwidth-24pt}%
+}{%
+  \end{minipage}\end{lrbox}%
+  \par\vspace{7pt}\noindent
+  \colorbox{resbg}{%
+    \textcolor{resbdr}{\rule{2.5pt}{\dimexpr\ht\jhanacalloutbox+\dp\jhanacalloutbox+8pt}}%
+    \hspace{6pt}\raisebox{0pt}[\ht\jhanacalloutbox+4pt][\dp\jhanacalloutbox+4pt]{\usebox{\jhanacalloutbox}}\hspace{4pt}%
+  }\par\vspace{7pt}%
+}
+\newsavebox{\jhananotebox}
+\newenvironment{sidenote}{%
+  \begin{lrbox}{\jhananotebox}\begin{minipage}{\dimexpr\textwidth-24pt}%
+}{%
+  \end{minipage}\end{lrbox}%
+  \par\vspace{7pt}\noindent
+  \colorbox{warnbg}{%
+    \textcolor{warnbdr}{\rule{2.5pt}{\dimexpr\ht\jhananotebox+\dp\jhananotebox+8pt}}%
+    \hspace{6pt}\raisebox{0pt}[\ht\jhananotebox+4pt][\dp\jhananotebox+4pt]{\usebox{\jhananotebox}}\hspace{4pt}%
+  }\par\vspace{7pt}%
+}

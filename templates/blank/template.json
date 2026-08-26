@@ -1,0 +1,8 @@
+{
+  "name": "Blank document",
+  "description": "A clean XeLaTeX document with sensible typography and no imposed structure.",
+  "rootFile": "main.tex",
+  "accent": "#718096",
+  "order": 4,
+  "tags": ["minimal", "xelatex"]
+}

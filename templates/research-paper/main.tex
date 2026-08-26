@@ -1,0 +1,47 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{fontspec}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage[round,authoryear]{natbib}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\IfFontExistsTF{TeX Gyre Pagella}
+  {\setmainfont{TeX Gyre Pagella}}
+  {}
+\definecolor{linkblue}{HTML}{1939B7}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=linkblue,
+  citecolor=linkblue,
+  urlcolor=linkblue,
+  pdftitle={Working Paper Title},
+  pdfauthor={Author Name}
+}
+
+\title{Working Paper Title}
+\author{Author Name\\\small Institution or affiliation}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+State the research question, method, central result, and contribution in roughly
+150--250 words. The abstract should stand on its own.
+\end{abstract}
+
+\input{sections/introduction}
+\input{sections/method}
+\input{sections/results}
+\input{sections/conclusion}
+
+% Once references.bib contains a cited source, uncomment these two lines:
+% \bibliographystyle{plainnat}
+% \bibliography{references}
+
+\end{document}

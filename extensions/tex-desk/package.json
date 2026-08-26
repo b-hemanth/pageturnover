@@ -1,0 +1,186 @@
+{
+  "name": "hbc-tex-companion",
+  "displayName": "HBC TeX Companion",
+  "description": "Cursor and VS Code helpers for PageTurnover's disk-backed TeX workspaces.",
+  "version": "0.1.1",
+  "publisher": "hbc-local",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/b-hemanth/pageturnover.git",
+    "directory": "extensions/tex-desk"
+  },
+  "homepage": "https://github.com/b-hemanth/pageturnover#readme",
+  "bugs": {
+    "url": "https://github.com/b-hemanth/pageturnover/issues"
+  },
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "latex",
+    "tex",
+    "arxiv"
+  ],
+  "extensionKind": [
+    "workspace"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onStartupFinished",
+    "onLanguage:latex"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": false,
+      "description": "Starting the local editor and compiling TeX execute tools from the selected repository."
+    },
+    "virtualWorkspaces": {
+      "supported": false
+    }
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "hbcTex.actions",
+        "title": "HBC TeX: Actions"
+      },
+      {
+        "command": "hbcTex.openDesk",
+        "title": "HBC TeX: Open Browser Desk",
+        "icon": "$(open-preview)"
+      },
+      {
+        "command": "hbcTex.openProject",
+        "title": "HBC TeX: Open Project"
+      },
+      {
+        "command": "hbcTex.selectProject",
+        "title": "HBC TeX: Select Default Project"
+      },
+      {
+        "command": "hbcTex.compileProject",
+        "title": "HBC TeX: Compile Current Paper",
+        "icon": "$(run)"
+      },
+      {
+        "command": "hbcTex.lintFile",
+        "title": "HBC TeX: Lint Current TeX File",
+        "icon": "$(checklist)"
+      },
+      {
+        "command": "hbcTex.openPdfProof",
+        "title": "HBC TeX: Open PDF Proof",
+        "icon": "$(preview)"
+      },
+      {
+        "command": "hbcTex.exportArxiv",
+        "title": "HBC TeX: Export arXiv Source"
+      },
+      {
+        "command": "hbcTex.startServer",
+        "title": "HBC TeX: Start Local Server"
+      },
+      {
+        "command": "hbcTex.stopServer",
+        "title": "HBC TeX: Stop Local Server"
+      },
+      {
+        "command": "hbcTex.serverStatus",
+        "title": "HBC TeX: Show Server Status"
+      },
+      {
+        "command": "hbcTex.selectRepoRoot",
+        "title": "HBC TeX: Select Repository Root"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "hbcTex.compileProject",
+          "when": "resourceExtname == .tex",
+          "group": "navigation@50"
+        },
+        {
+          "command": "hbcTex.openPdfProof",
+          "when": "resourceExtname == .tex",
+          "group": "navigation@51"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "hbcTex.compileProject",
+          "when": "resourceExtname == .tex",
+          "group": "navigation@50"
+        },
+        {
+          "command": "hbcTex.lintFile",
+          "when": "resourceExtname == .tex",
+          "group": "navigation@51"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "HBC TeX",
+      "properties": {
+        "hbcTex.repoRoot": {
+          "type": "string",
+          "default": "",
+          "scope": "machine-overridable",
+          "description": "Absolute path to the TeX desk repository. Leave empty to discover it beneath the open workspace."
+        },
+        "hbcTex.serverPort": {
+          "type": "integer",
+          "default": 3006,
+          "minimum": 1024,
+          "maximum": 65535,
+          "scope": "machine-overridable",
+          "description": "Loopback port used by the production editor on this extension host."
+        },
+        "hbcTex.defaultProjectId": {
+          "type": "string",
+          "default": "welcome-paper",
+          "pattern": "^[a-z0-9][a-z0-9-]{0,63}$",
+          "scope": "window",
+          "description": "Workspace project used when no TeX file is active. If it is unavailable, the extension asks you to select a project."
+        },
+        "hbcTex.lintOnSave": {
+          "type": "boolean",
+          "default": true,
+          "scope": "window",
+          "description": "Run the desk's structural parser and ChkTeX after saving a project TeX file while the server is running."
+        },
+        "hbcTex.compileOnSave": {
+          "type": "boolean",
+          "default": false,
+          "scope": "window",
+          "description": "Compile the paper after saving any TeX file in its project."
+        },
+        "hbcTex.showStatusBar": {
+          "type": "boolean",
+          "default": true,
+          "scope": "window",
+          "description": "Show the local editor's health and port in the status bar."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
+    "clean:vsix": "node -e \"const fs=require('node:fs'); for (const file of fs.readdirSync('.')) if (/^hbc-tex-companion-.*\\.vsix$/.test(file)) fs.rmSync(file)\"",
+    "compile": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run compile && node --test test/*.node.cjs",
+    "package": "npm run clean:vsix && npm run check && vsce package --no-dependencies",
+    "vscode:prepublish": "npm run compile"
+  },
+  "devDependencies": {
+    "@types/node": "^20.16.0",
+    "@types/vscode": "1.95.0",
+    "@vscode/vsce": "^3.6.0",
+    "typescript": "^5.8.3"
+  }
+}

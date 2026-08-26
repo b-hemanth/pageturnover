@@ -1,0 +1,46 @@
+\section{The main result}\label{sec:main-result}
+
+\begin{theorem}\label{thm:main}
+Suppose that Assumption~\ref{ass:equidistribution} holds and that the local
+conditions $U_v$ have positive density. Then there is a constant $c>0$ such
+that, for all sufficiently large $B$,
+\begin{equation}\label{eq:main-bound}
+  \#\{x\in\mathcal{H}(B):x\text{ is admissible}\}\geq cB.
+\end{equation}
+In particular, infinitely many admissible data exist.
+\end{theorem}
+
+The proof is deliberately short in this template; a real paper should state
+where each uniformity estimate enters.
+
+\begin{lemma}\label{lem:local-density}
+The combined local condition has density
+$\delta_{\Omega}=\prod_{v\in\Omega}\delta_v>0$.
+\end{lemma}
+
+\begin{proof}
+The set $\Omega$ is finite and every factor $\delta_v$ is positive, so their
+product is positive.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Apply Assumption~\ref{ass:equidistribution} after imposing the residue
+conditions defining admissibility. Lemma~\ref{lem:local-density} gives
+\begin{equation*}
+  \#\{x\in\mathcal{H}(B):x\text{ is admissible}\}
+  =\delta_{\Omega}B+O\!\left(B^{1-\eta}\right).
+\end{equation*}
+For sufficiently large $B$, the error is at most
+$\tfrac12\delta_{\Omega}B$. Thus~\eqref{eq:main-bound} holds with
+$c=\tfrac12\delta_{\Omega}$.
+\end{proof}
+
+\begin{corollary}\label{cor:existence}
+Under the hypotheses of Theorem~\ref{thm:main}, at least one admissible global
+datum exists.
+\end{corollary}
+
+\begin{proof}
+Take $B$ large enough that the right-hand side
+of~\eqref{eq:main-bound} is positive.
+\end{proof}

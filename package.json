@@ -1,0 +1,60 @@
+{
+  "name": "pageturnover",
+  "private": true,
+  "version": "0.1.1",
+  "description": "A private-by-default, disk-native LaTeX writing desk for browser, Cursor, VS Code, and Codex.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/b-hemanth/pageturnover.git"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "type": "module",
+  "scripts": {
+    "cursor": "cursor --classic --new-window .",
+    "dev": "concurrently -k \"vite --host 0.0.0.0\" \"node --watch server/index.mjs\"",
+    "build": "tsc -b && vite build",
+    "start": "node scripts/serve-production.mjs",
+    "setup": "node scripts/setup.mjs",
+    "doctor": "node scripts/setup.mjs --check && node plugins/hbc-tex-desk/scripts/texdesk.mjs doctor",
+    "serve": "node scripts/serve-production.mjs",
+    "cursor:package": "npm --prefix extensions/tex-desk run package",
+    "cursor:install": "node scripts/install-cursor-extension.mjs",
+    "audit:release": "node scripts/release-audit.mjs",
+    "check": "tsc -b && eslint .",
+    "test": "npm run test:app && npm run test:plugin",
+    "test:app": "vitest run --exclude 'plugins/**'",
+    "test:plugin": "node --test plugins/hbc-tex-desk/tests/*.test.mjs"
+  },
+  "dependencies": {
+    "@monaco-editor/react": "latest",
+    "@unified-latex/unified-latex": "^1.8.4",
+    "chokidar": "latest",
+    "express": "latest",
+    "lucide-react": "latest",
+    "monaco-editor": "0.53.0",
+    "multer": "latest",
+    "openai": "latest",
+    "pdfjs-dist": "^6.2.108",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@eslint/js": "latest",
+    "@types/express": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@vitejs/plugin-react": "latest",
+    "concurrently": "latest",
+    "eslint": "latest",
+    "eslint-plugin-react-hooks": "latest",
+    "eslint-plugin-react-refresh": "latest",
+    "globals": "latest",
+    "typescript": "latest",
+    "typescript-eslint": "latest",
+    "vite": "latest",
+    "vitest": "latest"
+  }
+}

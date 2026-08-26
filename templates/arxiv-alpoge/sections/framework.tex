@@ -1,0 +1,28 @@
+\section{The framework}\label{sec:framework}
+
+Let $K$ be a field, let $V$ be a geometrically integral $K$-variety, and let
+$\mathcal{H}$ be a countable family of height-bounded subsets of $V(K)$. Write
+$\mathcal{H}(B)$ for the members of height at most $B$.
+
+\begin{definition}\label{def:admissible}
+A datum $x\in\mathcal{H}(B)$ is \emph{admissible} if its localization $x_v$
+lies in a prescribed open subset $U_v\subseteq V(K_v)$ for every
+$v\in\Omega$.
+\end{definition}
+
+We use the following model hypothesis to distinguish the structural input from
+the analytic one.
+
+\begin{assumption}\label{ass:equidistribution}
+There are constants $\delta>0$ and $\eta>0$ such that, uniformly over
+admissible residue conditions,
+\begin{equation}\label{eq:counting}
+  \#\mathcal{H}(B)=\delta B+O\!\left(B^{1-\eta}\right).
+\end{equation}
+\end{assumption}
+
+\begin{remark}
+In an application, $\delta$ is normally a product of local densities. The
+substantive task is to prove that the product is nonzero and that the error
+in~\eqref{eq:counting} is uniform.
+\end{remark}

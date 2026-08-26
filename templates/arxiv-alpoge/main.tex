@@ -1,0 +1,103 @@
+\documentclass[11pt,letterpaper]{article}
+
+% A conservative, arXiv-friendly preamble. pdfLaTeX is the default; the same
+% source also compiles with XeLaTeX without requiring external font files.
+% Source references: https://arxiv.org/src/2501.18774,
+% https://arxiv.org/src/2408.11653, and https://arxiv.org/src/1807.03761.
+\usepackage{iftex}
+\ifPDFTeX%
+  \usepackage[utf8]{inputenc}
+\fi%
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathtools,mathrsfs}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{url}
+
+% Keep links legible on screen and quiet in print.
+\definecolor{linkblue}{RGB}{20,72,118}
+\definecolor{citeburgundy}{RGB}{128,36,52}
+\usepackage[
+  colorlinks=true,
+  linkcolor=linkblue,
+  citecolor=citeburgundy,
+  urlcolor=linkblue,
+  bookmarks=true,
+  bookmarksnumbered=true
+]{hyperref}
+
+% Alpoge-style mathematical structure: a single theorem counter within each
+% section, with equations numbered by section as well.
+\numberwithin{equation}{section}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{assumption}[theorem]{Assumption}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% Common operators and notation. Add paper-specific commands here rather than
+% scattering definitions through the body.
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\cO}{\mathcal{O}}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\Spec}{Spec}
+
+\setlist{itemsep=0.25em,topsep=0.5em}
+\urlstyle{same}
+\allowdisplaybreaks[2]
+\emergencystretch=2em
+
+\title{A Local-to-Global Principle for Structured Families}
+\author{Author Name}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We study a family of arithmetic objects equipped with compatible local
+conditions. Under a finite-obstruction hypothesis, we show that local
+solvability forces a global solution and obtain a quantitative refinement.
+The proof separates the geometric input from the counting argument, making
+the source of each hypothesis explicit. This abstract is starter text: replace
+it with the question, principal result, method, and significance of the paper.
+\end{abstract}
+
+\input{sections/introduction}
+\input{sections/framework}
+\input{sections/main-result}
+\input{sections/further-questions}
+
+\subsection*{Acknowledgments}
+Add acknowledgments, grant support, and data or code availability statements
+here.
+
+\bibliographystyle{amsalpha}
+\bibliography{references}
+
+\end{document}

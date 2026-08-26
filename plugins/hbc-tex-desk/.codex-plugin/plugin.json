@@ -1,0 +1,36 @@
+{
+  "name": "hbc-tex-desk",
+  "version": "0.1.1+codex.20260826151051",
+  "description": "Personal Codex bridge for disk-native TeX workspaces.",
+  "author": {
+    "name": "HBC",
+    "url": "https://github.com/b-hemanth"
+  },
+  "homepage": "https://github.com/b-hemanth/pageturnover",
+  "repository": "https://github.com/b-hemanth/pageturnover",
+  "license": "MIT",
+  "keywords": [
+    "latex",
+    "tex",
+    "arxiv",
+    "writing"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "HBC TeX Desk",
+    "shortDescription": "Work on the same local TeX papers from Codex and your editor.",
+    "longDescription": "Personal, unbranded tooling for reading, editing, linting, compiling, proofing, and exporting the disk-native TeX workspaces used by the local editor.",
+    "developerName": "HBC",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write",
+      "Local tools"
+    ],
+    "websiteURL": "https://github.com/b-hemanth/pageturnover",
+    "defaultPrompt": [
+      "Open my current TeX paper, check it, and help me revise it safely."
+    ]
+  },
+  "mcpServers": "./.mcp.json"
+}

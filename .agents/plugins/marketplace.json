@@ -1,0 +1,20 @@
+{
+  "name": "pageturnover",
+  "interface": {
+    "displayName": "PageTurnover"
+  },
+  "plugins": [
+    {
+      "name": "hbc-tex-desk",
+      "source": {
+        "source": "local",
+        "path": "./plugins/hbc-tex-desk"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

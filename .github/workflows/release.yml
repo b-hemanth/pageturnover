@@ -1,0 +1,47 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            extensions/tex-desk/package-lock.json
+      - name: Install TeX toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y latexmk texlive-xetex texlive-latex-extra texlive-fonts-recommended texlive-science lmodern chktex poppler-utils
+      - run: npm ci
+      - run: npm run check
+      - run: npm test
+      - run: npm run build
+      - run: npm run audit:release
+      - run: npm --prefix extensions/tex-desk ci
+      - run: npm --prefix extensions/tex-desk test
+      - name: Build release files
+        run: |
+          mkdir -p release
+          VERSION="${GITHUB_REF_NAME#v}"
+          test "$(node -p "require('./package.json').version")" = "$VERSION"
+          test "$(node -p "require('./extensions/tex-desk/package.json').version")" = "$VERSION"
+          npm --prefix extensions/tex-desk run package -- --out "$GITHUB_WORKSPACE/release/hbc-tex-companion.vsix"
+          git archive --format=tar.gz --prefix="pageturnover-${VERSION}/" HEAD -o "release/pageturnover-${VERSION}.tar.gz"
+          (cd release && sha256sum *.vsix *.tar.gz > SHA256SUMS)
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" release/* --verify-tag --generate-notes --title "PageTurnover $GITHUB_REF_NAME"

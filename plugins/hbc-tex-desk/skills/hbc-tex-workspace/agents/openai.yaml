@@ -1,0 +1,4 @@
+interface:
+  display_name: "HBC TeX Workspace"
+  short_description: "Work safely on local TeX papers"
+  default_prompt: "Use $hbc-tex-workspace to inspect and improve my current TeX paper."

@@ -1,0 +1,9 @@
+{
+  "name": "jhana paper",
+  "description": "The jhana long-form system: Lora and Work Sans, canonical greens, real wordmark, callouts, tables, and citation-ready paper structure.",
+  "projectDescription": "jhana-branded long-form paper",
+  "rootFile": "main.tex",
+  "accent": "#00AB55",
+  "order": 3,
+  "tags": ["jhana", "paper", "branded", "bibtex"]
+}
