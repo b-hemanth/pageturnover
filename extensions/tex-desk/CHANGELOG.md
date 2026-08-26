@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.2
+
+- Preserve configured Windows `PATHEXT` suffix casing so tool discovery is
+  testable and consistent on case-sensitive hosts.
+
 ## 0.1.1
 
 - First portable public release: clean-machine setup, Remote SSH support,

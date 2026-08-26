@@ -1,6 +1,6 @@
 {
   "name": "hbc-tex-desk",
-  "version": "0.1.1+codex.20260826151051",
+  "version": "0.1.2+codex.20260826152438",
   "description": "Personal Codex bridge for disk-native TeX workspaces.",
   "author": {
     "name": "HBC",

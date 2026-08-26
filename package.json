@@ -1,7 +1,7 @@
 {
   "name": "pageturnover",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A private-by-default, disk-native LaTeX writing desk for browser, Cursor, VS Code, and Codex.",
   "repository": {
     "type": "git",

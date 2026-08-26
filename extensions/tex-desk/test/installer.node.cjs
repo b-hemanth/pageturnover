@@ -40,13 +40,13 @@ test('matches only exact id and version lines from post-install listing', async 
   assert.equal(extensionVersionFromList(output, 'missing.extension'), undefined);
 });
 
-test('replaces 0.1.0 with 0.1.1 and requires an exact post-install listing', async () => {
+test('replaces 0.1.1 with 0.1.2 and requires an exact post-install listing', async () => {
   const { installOnCandidate } = await installerModule;
   const extensionId = 'hbc-local.hbc-tex-companion';
   const packaged = {
     extensionId,
-    version: '0.1.1',
-    vsixPath: path.join('artifacts', 'hbc-tex-companion-0.1.1.vsix'),
+    version: '0.1.2',
+    vsixPath: path.join('artifacts', 'hbc-tex-companion-0.1.2.vsix'),
   };
   const candidate = { command: 'fake-editor' };
 
@@ -59,14 +59,14 @@ test('replaces 0.1.0 with 0.1.1 and requires an exact post-install listing', asy
     }
     if (args[0] === '--install-extension') return { code: 0, stdout: 'installed', stderr: '' };
     listCount += 1;
-    const version = listCount === 1 ? '0.1.0' : '0.1.1';
+    const version = listCount === 1 ? '0.1.1' : '0.1.2';
     return { code: 0, stdout: `${extensionId}@${version}\n`, stderr: '' };
   };
 
   assert.deepEqual(await installOnCandidate(candidate, packaged, successfulUpgrade), {
     status: 'verified',
     installed: true,
-    previousVersion: '0.1.0',
+    previousVersion: '0.1.1',
   });
   assert.deepEqual(
     calls.find((args) => args[0] === '--install-extension'),
@@ -78,11 +78,11 @@ test('replaces 0.1.0 with 0.1.1 and requires an exact post-install listing', asy
       return { code: 0, stdout: '--list-extensions --install-extension', stderr: '' };
     }
     if (args[0] === '--install-extension') return { code: 0, stdout: 'installed', stderr: '' };
-    return { code: 0, stdout: `${extensionId}@0.1.0\n`, stderr: '' };
+    return { code: 0, stdout: `${extensionId}@0.1.1\n`, stderr: '' };
   };
   assert.deepEqual(await installOnCandidate(candidate, packaged, staleAfterInstall), {
     status: 'failed',
-    reason: 'post-install list reported 0.1.0',
+    reason: 'post-install list reported 0.1.1',
   });
 });
 

@@ -28,7 +28,14 @@ function executableSuffixes(env, platform) {
     .map((extension) => extension.trim())
     .filter((extension) => /^\.[A-Za-z0-9]+$/.test(extension));
   const extensions = configured.length ? configured : DEFAULT_WINDOWS_EXECUTABLE_EXTENSIONS;
-  return ['', ...new Set(extensions.map((extension) => extension.toUpperCase()))];
+  const seen = new Set();
+  const unique = extensions.filter((extension) => {
+    const normalized = extension.toUpperCase();
+    if (seen.has(normalized)) return false;
+    seen.add(normalized);
+    return true;
+  });
+  return ['', ...unique];
 }
 
 export function inheritedLocaleEnv() {

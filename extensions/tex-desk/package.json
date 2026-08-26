@@ -2,7 +2,7 @@
   "name": "hbc-tex-companion",
   "displayName": "HBC TeX Companion",
   "description": "Cursor and VS Code helpers for PageTurnover's disk-backed TeX workspaces.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "hbc-local",
   "license": "MIT",
   "repository": {
