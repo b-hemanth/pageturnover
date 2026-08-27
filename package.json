@@ -33,7 +33,7 @@
     "chokidar": "latest",
     "express": "latest",
     "lucide-react": "latest",
-    "monaco-editor": "0.53.0",
+    "monaco-editor": "0.56.0",
     "multer": "latest",
     "openai": "latest",
     "pdfjs-dist": "^6.2.108",
