@@ -36,7 +36,7 @@
     "monaco-editor": "0.53.0",
     "multer": "latest",
     "openai": "latest",
-    "pdfjs-dist": "^6.2.108",
+    "pdfjs-dist": "^6.3.289",
     "react": "latest",
     "react-dom": "latest"
   },
